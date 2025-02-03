@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Skeleton } from '@/components/ui/skeleton'; // Assuming you're using shadcn for the skeleton loader
+import { Skeleton } from '@/components/ui/skeleton'; 
 
 // Define the type for the API response
 interface BitcoinData {
@@ -55,7 +55,7 @@ const BitcoinChart = () => {
 
   // Prepare the chart data
   const chartData = data.prices.map((price) => ({
-    time: new Date(price[0]).toLocaleTimeString(),
+    time: new Date(price[0]).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     price: parseFloat(price[1].toFixed(2)), // Format price to 2 decimal places
   }));
 
@@ -72,7 +72,7 @@ const BitcoinChart = () => {
 
   return (
     <div className="bg-dark-paper rounded-lg shadow-lg p-6">
-      <h3 className="text-xl font-semibold text-white mb-4">Bitcoin Price (Last 24h)</h3>
+      <h3 className="text-xl font-semibold text-white mb-4">Bitcoin Price (Last 1h)</h3>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={chartData} margin={{ left: 20, right: 20 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#374151" />

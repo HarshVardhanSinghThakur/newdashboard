@@ -13,7 +13,7 @@ export default function AnalyticsPage() {
           </CardHeader>
           <div className="p-4 bg-dark-background rounded-lg shadow-lg">
             <h2 className="text-lg text-white font-semibold">Bitcoin Price Chart</h2>
-            <p className="text-gray-400 mb-4">Real-time data from the last 1 hours</p>
+            <p className="text-gray-400 mb-4">Real-time data from coingecko api</p>
             <BitcoinChart />
           </div>
         </Card>
