@@ -1,5 +1,4 @@
 'use client';
-import { useState, useEffect } from 'react';
 import { BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -11,17 +10,6 @@ const data = [
 ];
 
 export default function BarChartComponent() {
-  const [chartWidth, setChartWidth] = useState(400);
-
-  useEffect(() => {
-    const updateSize = () => {
-      setChartWidth(window.innerWidth < 768 ? window.innerWidth - 40 : 400);
-    };
-    updateSize();
-    window.addEventListener('resize', updateSize);
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
-
   return (
     <Card className="bg-black text-white">
       <CardHeader>

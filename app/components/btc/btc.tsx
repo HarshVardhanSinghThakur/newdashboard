@@ -1,11 +1,17 @@
-// components/BitcoinChart.tsx
+// components/btc/btc.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Skeleton } from '@/components/ui/skeleton'; 
+import { Skeleton } from '@/components/ui/skeleton'; // Assuming you're using shadcn for the skeleton loader
+
+// Define the type for the API response
+interface BitcoinData {
+  prices: [number, number][]; // Array of [timestamp, price] pairs
+}
+
 const BitcoinChart = () => {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<BitcoinData | null>(null); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,7 +20,7 @@ const BitcoinChart = () => {
       try {
         const res = await fetch('/api/btc');
         if (!res.ok) throw new Error('Failed to fetch Bitcoin data');
-        const result = await res.json();
+        const result: BitcoinData = await res.json(); 
         setData(result);
       } catch (err) {
         if (err instanceof Error) {
@@ -47,18 +53,18 @@ const BitcoinChart = () => {
     return <div className="text-white">No data available</div>;
   }
 
-  // Preparing the chart data
-  const chartData = data.prices.map((price: [number, number]) => ({
+  // Prepare the chart data
+  const chartData = data.prices.map((price) => ({
     time: new Date(price[0]).toLocaleTimeString(),
     price: parseFloat(price[1].toFixed(2)), // Format price to 2 decimal places
   }));
 
   // Calculate min and max values for the Y-axis
-  const minPrice = Math.min(...chartData.map((d: any) => d.price));
-  const maxPrice = Math.max(...chartData.map((d: any) => d.price));
+  const minPrice = Math.min(...chartData.map((d) => d.price));
+  const maxPrice = Math.max(...chartData.map((d) => d.price));
 
-  
-  const padding = (maxPrice - minPrice) * 0.1; // 10% padding
+  // Add some padding to the range
+  const padding = (maxPrice - minPrice) * 0.1; 
   const yAxisDomain = [minPrice - padding, maxPrice + padding];
 
   // Format Y-axis values with a dollar sign
@@ -75,7 +81,7 @@ const BitcoinChart = () => {
             stroke="#9CA3AF"
             domain={[yAxisDomain[0], yAxisDomain[1]]} // Dynamic range
             tickFormatter={formatYAxis} // Format Y-axis values
-            width={80} 
+            width={90} 
           />
           <Tooltip
             contentStyle={{
